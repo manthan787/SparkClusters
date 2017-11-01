@@ -1,0 +1,9 @@
+*.class
+.idea
+target
+project
+lib
+HiFi.jar
+input/all
+.Rhistory
+.DS_Store
