@@ -11,7 +11,7 @@ clean:
 	rm -rf target
 
 run:
-	$(SPARK_HOME)/bin/spark-submit --class App --master local --driver-memory 6g HiFi.jar $(SONG_INFO_PATH) $(ARTIST_TERM_PATH)
+	$(SPARK_HOME)/bin/spark-submit --class Main --master local --driver-memory 6g HiFi.jar $(SONG_INFO_PATH) $(ARTIST_TERM_PATH)
 
 compile: $(TARGET)
 	$(SCALA_HOME)/bin/scalac -classpath $(CLASSPATH) -d $(TARGET) src/*.scala
