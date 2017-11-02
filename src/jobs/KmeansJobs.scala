@@ -5,6 +5,11 @@ import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 import record.SongRecord
 
+/**
+  * @author Manthan Thakar
+  *
+  * This class calls all the Kmeans jobs
+  */
 class KmeansJobs {
 
   def execute(sc: SparkContext, songData: RDD[SongRecord]) : Unit = {

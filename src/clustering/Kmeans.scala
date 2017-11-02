@@ -2,8 +2,15 @@ package clustering
 
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
-import record.SongRecord
 
+
+/**
+  * @author Manthan Thakar
+  *
+  * @param sc Spark Context instance
+  * @param values values on which Kmeans clustering is to be run
+  * @param maxIter Maximum number of iterations to be run
+  */
 class Kmeans(sc: SparkContext, values: RDD[Double], maxIter:Int) {
 
   def run(outputPath: String = "output/kmeans") = {
