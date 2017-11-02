@@ -15,7 +15,7 @@ class SongRecord(values: Array[String]) extends Serializable with Record {
   val startOfFadeOut: Float = convert(Try(values(3).toFloat), 0)
   val sampleRate: Float = convert(Try(values(4).toFloat), 0)
   val duration: Float = convert(Try(values(5).toFloat), 0)
-  val loudness: Float = convert(Try(values(6).toFloat), 0)
+  val loudness: Double = convert(Try(values(6).toDouble), 0)
   val tempo: Float = convert(Try(values(7).toFloat), 0)
   val key: Int = convert(Try(values(8).toInt), 0)
   val keyConfidence: Float = convert(Try(values(9).toFloat), 0)
@@ -38,6 +38,6 @@ class SongRecord(values: Array[String]) extends Serializable with Record {
   val year: Int = convert(Try(values(26).toInt), 0)
 
   override def toString: String = {
-    trackId + " " + title + " Artist:" + artistName + " Hotness:" + artistHotness + "Familiarity: " + artistFamiliarity
-  }
+    trackId + " " + title + " Artist:" + artistName + " Loudness:" + loudness
+   }
 }
