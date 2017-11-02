@@ -1,0 +1,26 @@
+---
+title: "A7"
+author: "Manthan Thakar"
+date: "11/1/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+```
+
+## Clustering
+
+```{r}
+OUTPUT_PATH = "output/loudness-clustering/part-00000"
+values = read.csv(OUTPUT_PATH, header = FALSE)
+cluster_min = values[values$V1 == 1, ]
+cluster_max = values[values$V1 == 0, ]
+values$V1 = as.factor(values$V1)
+ggplot(values, aes(x=V1, y=V2)) + 
+  geom_jitter(aes(col = values$V1))
+```
