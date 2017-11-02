@@ -18,7 +18,7 @@ library(ggplot2)
 ###Obsevations 
 
 ```{r}
-OUTPUT_PATH = "output/loudness-clustering/part-00000"
+OUTPUT_PATH = "output/kmeans-loudness/part-00000"
 values = read.csv(OUTPUT_PATH, header = FALSE)
 cluster_min = values[values$V1 == 1, ]
 cluster_max = values[values$V1 == 0, ]
@@ -47,3 +47,25 @@ library(formattable)
 formattable(d1)
 ```  
 Mean loudness of clusters are shown in the above table.Cluster 1 shows maximum standard deviation indicating that the values are spreadout and farther away from the mean. Cluster 0 has minimum standard deviation indicating that values are close to the mean.Both the facts,Mean and Standard deviation, can also be clearly seen in Figure-1.
+
+```{r}
+OUTPUT_PATH = "output/kmeans-length/part-00000"
+values = read.csv(OUTPUT_PATH, header = FALSE)
+cluster_min = values[values$V1 == 1, ]
+cluster_max = values[values$V1 == 0, ]
+values$V1 = as.factor(values$V1)
+p<- ggplot(values, aes(x=V1, y=V2)) + 
+  geom_jitter(aes(col = values$V1))
+p+ labs(x = "Cluster",y="Length",col = "Cluster")
+```
+
+```{r}
+OUTPUT_PATH = "output/kmeans-hotness/part-00000"
+values = read.csv(OUTPUT_PATH, header = FALSE)
+cluster_min = values[values$V1 == 1, ]
+cluster_max = values[values$V1 == 0, ]
+values$V1 = as.factor(values$V1)
+p<- ggplot(values, aes(x=V1, y=V2)) + 
+  geom_jitter(aes(col = values$V1))
+p+ labs(x = "Cluster",y="Length",col = "Cluster")
+```
