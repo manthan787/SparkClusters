@@ -11,9 +11,8 @@ class Kmeans(sc: SparkContext, values: RDD[Double], maxIter:Int) {
       .zipWithIndex).map(_.swap)
 
     var i = 0
-    val MAX_ITER = 10
     var clusters: RDD[(Int, Double)] = null
-    while (i < MAX_ITER) {
+    while (i < maxIter) {
       i += 1
       clusters = getClusters(centroids, values)
       centroids = getCentroids(clusters, centroids)
