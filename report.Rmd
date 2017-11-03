@@ -95,7 +95,8 @@ Our implementation of Hierarchical Agglomerative Clustering consists of followin
 In this section we discuss the results obtained by KMeans clustering and Agglomerative clustering. We first look at _KMeans clustering_ results for both small dataset and big dataset. In the next section, we discuss some of the challenges we faced while obtaining results for Agglomerative Clustering.
 
 #### Fuzzy loudness 
-Aim: To cluster songs into quiet, medium, and loud
+
+- **Aim:** To cluster songs into quiet, medium, and loud
 
 For this task, we cluster the loudness using KMeans clustering algorithm. As described above, we take `Min`, `Max` and `Mean` values of Loudness as initial centroids. The results generated are visualized for both small and big dataset.
 
@@ -110,7 +111,7 @@ means = rbind(means, cluster=1, mean=mean(values[(values$V1 == 1), ]$V2))
 means = rbind(means, cluster=2, mean=mean(values[(values$V1 == 2), ]$V2))
 p<- ggplot(values, aes(x=V1, y=V2)) + 
   geom_jitter(aes(col = values$V1))
-p+labs(x = "Cluster",y="Loudness",col = "Cluster", title="Figure 1.1. Fuzzy Loudness: Small Dataset")+ scale_color_manual(labels=c("Loud","Quiet","Medium"),values=c("pink","green","blue"))
+p+labs(x = "Cluster",y="Loudness",col = "Cluster", title="Figure 1.1. Fuzzy Loudness: Small Dataset")+ scale_color_manual(labels=c("Loud","Quiet","Medium"),values=c("seagreen4","slategrey","darkviolet"))
 ```
 
 ```{r cache=TRUE, message=FALSE, echo=FALSE}
@@ -119,7 +120,7 @@ values = read.csv(OUTPUT_PATH, header = FALSE)
 values$V1 = as.factor(values$V1)
 p<- ggplot(values, aes(x=V1, y=V2)) +
   geom_jitter(aes(col = values$V1))
-p+labs(x = "Cluster",y="Loudness",col = "Cluster", title="Figure 1.2. Fuzzy Loudness: Big Dataset")+ scale_color_manual(labels=c("Loud","Quiet","Medium"),values=c("pink","green","blue"))
+p+labs(x = "Cluster",y="Loudness",col = "Cluster", title="Figure 1.2. Fuzzy Loudness: Big Dataset")+ scale_color_manual(labels=c("Loud","Quiet","Medium"),values=c("seagreen4","slategrey","darkviolet"))
 ```
 
   
@@ -145,7 +146,8 @@ formattable(d1)
 Mean loudness of clusters are shown in the above table. Cluster 1 shows maximum standard deviation indicating that the values are spreadout and farther away from the mean. Cluster 0 has minimum standard deviation indicating that values are close to the mean.Both the facts,Mean and Standard deviation, can also be clearly seen in Figure 2.
 
 #### Fuzzy length  
-Aim: To cluster songs into short, medium, and long
+
+- **Aim:** To cluster songs into short, medium, and long
 
 For this task, we cluster the length of songs using KMeans clustering algorithm. As described above, we take `Min`, `Max` and `Mean` values of length as initial centroids. The results generated are visualized for both small and big dataset.
 
@@ -159,7 +161,7 @@ lvalues = read.csv(OUTPUT_PATH, header = FALSE)
 lvalues$V1 = as.factor(lvalues$V1)
 p<- ggplot(lvalues, aes(x=V1, y=V2)) + 
   geom_jitter(aes(col = lvalues$V1))
-p+ labs(x = "Cluster",y="Length",col = "Cluster", title="Figure 3.1. Fuzzy Length: Small Dataset")+ scale_color_manual(labels=c("Long","Short","Medium"),values=c("pink","green","blue"))
+p+ labs(x = "Cluster",y="Length",col = "Cluster", title="Figure 3.1. Fuzzy Length: Small Dataset")+ scale_color_manual(labels=c("Long","Short","Medium"),values=c("seagreen4","slategrey","darkviolet"))
 ```
 
 ```{r cache=TRUE, message=FALSE, echo=FALSE}
@@ -168,7 +170,7 @@ lvalues = read.csv(OUTPUT_PATH, header = FALSE)
 lvalues$V1 = as.factor(lvalues$V1)
 p<- ggplot(lvalues, aes(x=V1, y=V2)) + 
   geom_jitter(aes(col = lvalues$V1))
-p+ labs(x = "Cluster",y="Length",col = "Cluster", title="Figure 3.2. Fuzzy Length: Big Dataset")+ scale_color_manual(labels=c("Long","Short","Medium"),values=c("pink","green","blue"))
+p+ labs(x = "Cluster",y="Length",col = "Cluster", title="Figure 3.2. Fuzzy Length: Big Dataset")+ scale_color_manual(labels=c("Long","Short","Medium"),values=c("seagreen4","slategrey","darkviolet"))
 ```
 
 It is observed that the data points belonging to the same length range appear in the same cluster in a length vs Cluster graph, validating the fact that the clustering has been exceuted properly.
@@ -194,11 +196,11 @@ Mean length of clusters are shown in the above table. Cluster 0(long) shows maxi
 
 #### Fuzzy Tempo
 
-Aim: To cluster songs into slow, medium, and fast
+- **Aim:** To cluster songs into slow, medium, and fast
 
 For this task, we cluster the tempo of songs using KMeans clustering algorithm. As described above, we take `Min`, `Max` and `Mean` values of length as initial centroids. The results generated are visualized for both small and big dataset.
 
-In both `Figure 5.1` and `Figure 5.2`, the clusters for fast songs and slow songs seem to be having a range where the cluster is very dense. For example, the values between tempo 150 to 200 have a lot of values clustered for 'Fast' cluster . But above 200, the values are scattered. This indicates that there are very few songs that are either fast or slow.
+In both `Figure 5.1` and `Figure 5.2`, the clusters for fast songs and slow songs seem to be having a range where the cluster is very dense. For example, the values between tempo 150 to 200 have a lot of values clustered for `Fast` cluster . But above 200, the values are scattered. This indicates that there are very few songs that are either fast or slow.
 
 As pointed before, we see a lot of 0 values, this time a bit more than before. This shows that there were many records for the Tempo data that had `NA` values in the data. Since the data seems to have very dense values in the clusters, we keep the 0 values as is. But keeping 0 values in the dataset might change cluster results for different shapes of data.
 
@@ -208,7 +210,7 @@ tvalues = read.csv(OUTPUT_PATH, header = FALSE)
 tvalues$V1 = as.factor(tvalues$V1)
 p<- ggplot(tvalues, aes(x=V1, y=V2)) + 
   geom_jitter(aes(col = tvalues$V1))
-p+ labs(x = "Cluster",y="Tempo",col = "Cluster", title="Figure 5.1. Fuzzy Tempo: Small Dataset")+ scale_color_manual(labels=c("Fast","Slow","Medium"),values=c("pink","green","blue"))
+p+ labs(x = "Cluster",y="Tempo",col = "Cluster", title="Figure 5.1. Fuzzy Tempo: Small Dataset")+ scale_color_manual(labels=c("Fast","Slow","Medium"),values=c("seagreen4","slategrey","darkviolet"))
 ```
 
 ```{r cache=TRUE, message=FALSE}
@@ -217,7 +219,7 @@ tvalues = read.csv(OUTPUT_PATH, header = FALSE)
 tvalues$V1 = as.factor(tvalues$V1)
 p<- ggplot(tvalues, aes(x=V1, y=V2)) + 
   geom_jitter(aes(col = tvalues$V1))
-p+ labs(x = "Cluster",y="Tempo",col = "Cluster", title="Figure 5.2. Fuzzy Tempo: Big Dataset")+ scale_color_manual(labels=c("Fast","Slow","Medium"),values=c("pink","green","blue"))
+p+ labs(x = "Cluster",y="Tempo",col = "Cluster", title="Figure 5.2. Fuzzy Tempo: Big Dataset")+ scale_color_manual(labels=c("Fast","Slow","Medium"),values=c("seagreen4","slategrey","darkviolet"))
 ```
 
 It is observed that the data points belonging to the same tempo range appear in the same cluster in a tempo vs Cluster graph, validating the fact that the clustering has been exceuted properly.
@@ -242,7 +244,8 @@ formattable(d1)
 Mean tempo of clusters is shown in the above table. Cluster 0(fast) shows maximum standard deviation indicating that the values are spreadout and farther away from the mean. Cluster 2 - medium has minimum standard deviation indicating that values are close to the mean.
 
 #### Fuzzy hotness  
-Aim: To cluster songs into cool, mild, and hot based on song hotness
+
+- **Aim:** To cluster songs into cool, mild, and hot based on song hotness
 
 For this task, we cluster songs by their hotness using KMeans clustering algorithm. As described above, we take `Min`, `Max` and `Mean` values of length as initial centroids. The results generated are visualized for both small and big dataset.
 
@@ -258,7 +261,7 @@ hvalues = read.csv(OUTPUT_PATH, header = FALSE)
 hvalues$V1 = as.factor(hvalues$V1)
 p<- ggplot(hvalues, aes(x=V1, y=V2)) + 
   geom_jitter(aes(col = hvalues$V1))
-p+ labs(x = "Cluster",y="Hotness",col = "Cluster", title="Figure 7.1. Fuzzy Tempo: Small Dataset (Min, Max, Mean) centroids")+ scale_color_manual(labels=c("Hot","Cool","Mild"),values=c("pink","green","blue"))
+p+ labs(x = "Cluster",y="Hotness",col = "Cluster", title="Figure 7.1. Fuzzy Hotness: Small Dataset (Min, Max, Mean) centroids")+ scale_color_manual(labels=c("Hot","Cool","Mild"),values=c("orangered1","royalblue1","orange1"))
 ```
 
 
@@ -268,7 +271,7 @@ hvalues = read.csv(OUTPUT_PATH, header = FALSE)
 hvalues$V1 = as.factor(hvalues$V1)
 p<- ggplot(hvalues, aes(x=V1, y=V2)) + 
   geom_jitter(aes(col = hvalues$V1))
-p+ labs(x = "Cluster",y="Hotness",col = "Cluster", title="Figure 7.2. Fuzzy Tempo: Small Dataset randomly chosen centroids")+ scale_color_manual(labels=c("Mild","Hot","Cold"),values=c("pink","green","blue"))
+p+ labs(x = "Cluster",y="Hotness",col = "Cluster", title="Figure 7.2. Fuzzy Hotness: Small Dataset randomly chosen centroids")+ scale_color_manual(labels=c("Hot","Cool","Mild"),values=c("orange1","orangered1","royalblue1"))
 ```
 
 It is observed that the data points belonging to the same hotness range appear in the same cluster in a hotness vs Cluster graph, validating the fact that the clustering has been exceuted properly.
@@ -292,10 +295,13 @@ formattable(d1)
 
 Mean hotness of clusters are shown in the above table.Cluster 0(hot) shows maximum standard deviation indicating that the values are spreadout and farther away from the mean. Cluster 1 - cool has minimum standard deviation indicating that values are close to the mean.
 
-#### Fuzzy combined hotness  
+#### Fuzzy combined hotness
 
-Aim: To cluster songs into cool, mild, and hot based on two dimensions: artist hotness, and song hotness
+- **Aim**:  To cluster songs into cool, mild, and hot based on two dimensions: artist hotness, and song hotness
 
+For this task, we cluster songs by their hotness and their artists' hotness using KMeans clustering algorithm. All the previous taks only performed KMeans algorithm on a one dimensional data. In this task, two dimensions are used. Instead of calculating `Min`, `Max` and `Mean` values to initialize the centroids, we randomly take sample data from the dataset and initialize the centroids.
+
+`Figure 9.1` and `Figure 9.2` show the clusters in Small Dataset and Big Dataset respectively.
 
 ```{r cache=TRUE, message=FALSE, echo=FALSE}
 OUTPUT_PATH = "output/combined-hotness/part-00000"
@@ -303,7 +309,7 @@ cvalues = read.csv(OUTPUT_PATH, header = FALSE)
 cvalues$V1 = as.factor(cvalues$V1)
 p<- ggplot(cvalues, aes(x=V2, y=V3)) + 
   geom_jitter(aes(col = cvalues$V1))
-p+ labs(x = "Song Hotness",y="Artist Hotness",col = "Cluster", title="Figure 9.1. Combined Hotness: Small Dataset")
+p+ labs(x = "Song Hotness",y="Artist Hotness",col = "Cluster", title="Figure 9.1. Combined Hotness: Small Dataset") + scale_color_manual(labels=c("Mild","Hot","Cool"),values=c("orange1","orangered1","royalblue1"))
 ```
 
 ```{r cache=TRUE, message=FALSE, echo=FALSE}
@@ -312,7 +318,8 @@ cvalues = read.csv(OUTPUT_PATH, header = FALSE)
 cvalues$V1 = as.factor(cvalues$V1)
 p<- ggplot(cvalues, aes(x=V2, y=V3)) + 
   geom_jitter(aes(col = cvalues$V1))
-p+ labs(x = "Song Hotness",y="Artist Hotness",col = "Cluster", title="Figure 9.1. Combined Hotness: Big Dataset")
+p+ labs(x = "Song Hotness",y="Artist Hotness",col = "Cluster", title="Figure 9.2. Combined Hotness: Big Dataset") +
+  scale_color_manual(labels=c("Mild","Hot","Cool"),values=c("orange1","orangered1","royalblue1"))
 ```
 
 ```{r cache=TRUE, message=FALSE, echo=FALSE}
@@ -330,8 +337,32 @@ library(formattable)
 formattable(d1)
 ```
 
-####Subproblem-2 : Graphs  
-Observations based on the clustering
+##### KMeans Performance
+
+- **Local Execution Time**  We ran all the KMeans clustering jobs on local machine using the small dataset, which took about **10 seconds**.
+
+- **Time of execution on AWS**  We ran all the KMenas jobs on AWS using the Big Dataset, which took **6 minutes** on a single node.
+
+We think that this performance is reasonable and we were able to verify the results by visualizing them. Compared to Agglomerative clustering, KMeans performs significantly better. We discuss more on Agglomerative Clustering performance in the next section.
+
+#### Hierarchical Agglomerative Clustering Results
+
+So far, we have looked at the results for KMeans clustering for all the tasks. Now, we discuss the lack of results from Agglomerative Clustering.
+
+We failed to obtain any presentable results with Agglomerative Clustering. Here are a few things we tried:
+
+- We tried running our Agglomerative Clustering implementation on the small dataset (10K songs) on local machine, which resulted in _Java Heap Space error_ with default configuration. 
+- Next we tried running the algorithm on `1000` records and `100` records respectively. Fortunately, these runs didn't result in heap space errors, but the runtimes were really slow and we couldn't finish both runs completely.
+- We tried runningn with `1000` records and `100` records on AWS. With `1000` records, it took about `4 hours` to finish a run, and with `100` records, it took about 40 minutes.
+
+Here's a few reasons due to which the runtime is too slow for Agglomerative Clustering:
+
+- As described in the implementation section, for Agglomerative clustering we create a distance matrix of size `n X n`, where `n` is the number of datapoints we want to consider. For example, for a file containing 10000 songs, the number of distance pairs to be maintained will be `10M`. On top of this, in each iteration, we filter values from this matrix and make changes to it.
+
+- Moreover, this method merges only two clusters in to one in each iteration, so the convergence times can be very slow compared to KMeans algorithm.
+
+#### Subproblem 2 : Graphs
+
 
 ```{r cache=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
 init_centroids = read.csv("output/initcentroids1/part-00000", header = FALSE)
@@ -350,4 +381,7 @@ i_tdm <- TermDocumentMatrix(i)
 i_tdm <- as.matrix(i_tdm)
 comparison.cloud(i_tdm, title.size = 1, colors=1:30, c(1, 1), random.order = FALSE, max.words = 1000)
 ```
+
+
+###Conclusion  
 
