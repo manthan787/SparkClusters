@@ -15,7 +15,7 @@ import org.apache.spark.rdd.RDD
 class Kmeans2D(sc: SparkContext, dim1: RDD[Double], dim2: RDD[Double], k:Int, maxIter:Int) {
 
   def run(outputPath: String = "output/kmeans") = {
-    val samples = dim1.takeSample(withReplacement = false, 3).zip(dim2.takeSample(withReplacement = false, 3))
+    val samples = dim1.takeSample(withReplacement = false, k).zip(dim2.takeSample(withReplacement = false, k))
     var centroids: RDD[(Int, (Double, Double))] = sc.parallelize(samples.zipWithIndex).map(_.swap)
     val values: RDD[(Double, Double)] = dim1.zip(dim2)
     var i = 0
