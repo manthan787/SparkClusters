@@ -27,6 +27,6 @@ class KmeansJobs {
 
     val combinedHotness = new Kmeans2D(sc, songData.map(_.songHotness),
       songData.map(_.artistHotness), k = 3, maxIter = 10)
-    combinedHotness.run("output/combined-hotness-expr")
+    combinedHotness.run("output/combined-hotness")
   }
 }
