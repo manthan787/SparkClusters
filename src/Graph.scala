@@ -3,10 +3,10 @@ import org.apache.spark.rdd.RDD
 import record.{ArtistTermRecord, SongRecord}
 import utils.Utils
 
-import scala.collection.mutable.ListBuffer
-
 /**
   * @author Manthan Thakar
+  *
+  * Solution for subproblem 2
   */
 object Graph {
 
@@ -50,28 +50,29 @@ object Graph {
         (acc1: List[String], acc2: List[String]) => acc1 ::: acc2
       )
     var centroids = trendSetters.join(artistTerms).map(x => x._2._2).zipWithIndex.map(_.swap)
-    println("Centroids!......")
-    centroids.take(2).foreach(println)
-//    println("...................")
-//    var i = 0
-//    var clusters: RDD[(Long, List[String])] = null
-//    while ( i < 1) {
-//      clusters = getClusters(centroids, artistTerms)
-//      centroids = getCentroids(clusters, centroids)
-//      i += 1
-//    }
+    centroids.map(x => x._1 + "," + x._2.distinct.mkString("\t")).saveAsTextFile("output/initcentroids1")
+    var i = 0
+    var clusters: RDD[(Long, List[String])] = null
+    while ( i < 10) {
+      println("Entering iteration :" + i)
+      clusters = getClusters(centroids, artistTerms)
+      centroids = getCentroids(clusters, centroids)
+      i += 1
+    }
+    centroids.map(x => x._1 + "," + x._2.distinct.mkString("\t")).saveAsTextFile("output/endcentroids1")
   }
 
   def getClusters(centroids: RDD[(Long, List[String])], artistTerms: RDD[(String, List[String])]): RDD[(Long, List[String])] = {
     val c: Array[(Long, List[String])] = centroids.collect
-    artistTerms.map(x => (c.map(y => (y._1, x._2.intersect(y._2).length)).minBy(z => z._2)._1, x._2))
+    artistTerms.map(x => (c.map(y => (y._1, x._2.intersect(y._2).length)).maxBy(z => z._2)._1, x._2))
   }
 
-//  def getCentroids(clusters: RDD[(Long, List[String])], centroids: RDD[(Long, List[String])]): RDD[(Long, List[String])] = {
-//    clusters
-//      .fullOuterJoin(centroids)
-//        .combineByKey(
-//          (v: (Option[List[String]]), Option[List[String]]) => (if (v._1.isEmpty) v._2.get else v._1.get))
-//        )
-//  }
+  def getCentroids(clusters: RDD[(Long, List[String])], centroids: RDD[(Long, List[String])]): RDD[(Long, List[String])] = {
+    clusters
+      .fullOuterJoin(centroids)
+        .combineByKey[List[String]](
+          (v: (Option[List[String]], Option[List[String]])) => if (v._1.isEmpty) v._2.get else v._1.get,
+          (acc: (List[String]), v: (Option[List[String]], Option[List[String]])) => v._2.get.intersect(acc),
+          (acc1: List[String], acc2: List[String]) => acc1 ::: acc2)
+  }
 }
