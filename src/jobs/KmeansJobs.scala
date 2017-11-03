@@ -12,21 +12,21 @@ import record.SongRecord
   */
 class KmeansJobs {
 
-  def execute(sc: SparkContext, songData: RDD[SongRecord]) : Unit = {
+  def execute(sc: SparkContext, songData: RDD[SongRecord], outputBase: String) : Unit = {
     val fuzzyLoudness = new Kmeans(sc, songData.map(_.loudness), 10)
-    fuzzyLoudness.run("output/kmeans-loudness")
+    fuzzyLoudness.run(outputBase + "kmeans-loudness")
 
     val fuzzyLength = new Kmeans(sc, songData.map(_.duration), 10)
-    fuzzyLength.run("output/kmeans-length")
+    fuzzyLength.run(outputBase + "kmeans-length")
 
     val fuzzyTempo = new Kmeans(sc, songData.map(_.tempo), 10)
-    fuzzyTempo.run("output/kmeans-tempo")
+    fuzzyTempo.run(outputBase + "kmeans-tempo")
 
     val fuzzyHotness = new Kmeans(sc, songData.map(_.songHotness), 10)
-    fuzzyHotness.run("output/kmeans-hotness")
+    fuzzyHotness.run(outputBase + "kmeans-hotness")
 
     val combinedHotness = new Kmeans2D(sc, songData.map(_.songHotness),
       songData.map(_.artistHotness), k = 3, maxIter = 10)
-    combinedHotness.run("output/combined-hotness")
+    combinedHotness.run(outputBase + "combined-hotness-expr")
   }
 }
