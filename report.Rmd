@@ -351,13 +351,3 @@ i_tdm <- as.matrix(i_tdm)
 comparison.cloud(i_tdm, title.size = 1, colors=1:30, c(1, 1), random.order = FALSE, max.words = 1000)
 ```
 
-###Performance  
-*K-means-  
- Time of exceution on local:  
- Time of execution on AWS:  
-*Hierarchical agglomerative clustering-  
- Time of exceution on local:  
- Time of execution on AWS:
-
-###Conclusion  
-
