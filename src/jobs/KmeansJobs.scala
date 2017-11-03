@@ -1,6 +1,6 @@
 package jobs
 
-import clustering.Kmeans
+import clustering.{Kmeans, Kmeans2D}
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 import record.SongRecord
@@ -24,5 +24,9 @@ class KmeansJobs {
 
     val fuzzyHotness = new Kmeans(sc, songData.map(_.songHotness), 10)
     fuzzyHotness.run("output/kmeans-hotness")
+
+    val combinedHotness = new Kmeans2D(sc, songData.map(_.songHotness),
+      songData.map(_.artistHotness), k = 3, maxIter = 10)
+    combinedHotness.run("output/combined-hotness-expr")
   }
 }
