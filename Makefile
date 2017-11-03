@@ -2,16 +2,16 @@ CLASSPATH = "dependencies/spark-core_2.11-2.2.0.jar:dependencies/spark-tags_2.11
 TARGET = target
 SCALA_HOME = /Users/manthanthakar/scala-2.11.8
 SPARK_HOME = /Users/manthanthakar/spark-2.2.0
-SONG_INFO_PATH = input/all/song_info.csv.gz
-ARTIST_TERM_PATH = input/all/artist_terms.csv.gz
-
+INPUT_PATH = input/MillionSongSubset/
+OUTPUT_PATH = output/
 all: clean build run report
 
 clean:
 	rm -rf target
 
 run:
-	$(SPARK_HOME)/bin/spark-submit --class Main --master local --driver-memory 6g HiFi.jar $(SONG_INFO_PATH) $(ARTIST_TERM_PATH)
+	$(SPARK_HOME)/bin/spark-submit --class Cluster --master local --driver-memory 6g HiFi.jar $(INPUT_PATH) $(OUTPUT_PATH)
+	$(SPARK_HOME)/bin/spark-submit --class Graph --master local --driver-memory 6g HiFi.jar $(INPUT_PATH) $(OUTPUT_PATH)
 
 compile: $(TARGET)
 	$(SCALA_HOME)/bin/scalac -classpath $(CLASSPATH) -d $(TARGET) src/**/*.scala src/*.scala
