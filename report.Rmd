@@ -382,8 +382,8 @@ The initial centroids and centroids after 10 iterations are visualized below by 
 Below is the visualization for centroids initially, which represents the artist terms for the top 30 popular artists. For the lack of space, we only represent 15 of these centroids. In the beginning, the centroids seem to be containing a lot of terms.
 
 ```{r cache=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
-init_centroids = read.csv("output/initcentroids1/part-00000", header = FALSE)
-end_centroids = read.csv("output/endcentroids1/part-00000", header = FALSE)
+init_centroids = read.csv("output/initcentroids/part-00000", header = FALSE)
+end_centroids = read.csv("output/endcentroids/part-00000", header = FALSE)
 names(init_centroids) = c("centroid", "words")
 names(end_centroids) = c("centroid", "words")
 i <- Corpus(VectorSource(init_centroids[11:25, ]$words))
