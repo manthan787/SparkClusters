@@ -16,7 +16,6 @@ class Kmeans(sc: SparkContext, values: RDD[Double], maxIter:Int) {
   def run(outputPath: String = "output/kmeans") = {
     var centroids: RDD[(Int, Double)] = sc.parallelize(Array(values.max, values.min, values.mean)
       .zipWithIndex).map(_.swap)
-
     var i = 0
     var clusters: RDD[(Int, Double)] = null
     while (i < maxIter) {
