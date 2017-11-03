@@ -35,7 +35,8 @@ Scala Version : 2.11.8
 
 Spark Version : 2.2.0
 
-###Results and Obsevations 
+###Results and Obsevations  
+####Subproblem -1 : Clustering
 Results obtained after clustering of the given dataset.  
 
 ####Fuzzy loudness  
@@ -47,12 +48,12 @@ values = read.csv(OUTPUT_PATH, header = FALSE)
 values$V1 = as.factor(values$V1)
 p<- ggplot(values, aes(x=V1, y=V2)) + 
   geom_jitter(aes(col = values$V1))
-p+labs(x = "Cluster",y="Loudness",col = "Cluster")+ scale_color_manual(labels=c("Loud","Quiet","Medium"),values=c("pink","green","blue"))
+p+labs(x = "Cluster",y="Loudness",col = "Cluster")+ scale_color_manual(labels=c("Quiet","Loud","Medium"),values=c("pink","green","blue"))
 
 ```
 Figure -1  
   
-It is observed that the data points belonging to the same loudness range appear in the same cluster in a Loudness vs Cluster graph, validating the fact that the clustering analysis has been exceuted properly. 
+It is observed that the data points belonging to the same loudness range appear in the same cluster in a Loudness vs Cluster graph, validating the fact that the clustering has been exceuted properly. 
 ```{r}
 counts <- table(values$V1)
 barplot(counts, main="Distribution", 
@@ -60,7 +61,7 @@ barplot(counts, main="Distribution",
 ```
 Figure-2   
 
-It is observed that maximum number of points are in cluster 0 indicating that most songs are loud followed by cluster 2 - quiet.  
+It is observed that maximum number of points are in cluster 0 indicating that most songs are quiet followed by cluster 2 - medium  
 ```{r}
 d1<-aggregate(values$V2, by=list(Cluster=values$V1), FUN=mean)
 d2<-aggregate(values$V2, by=list(Cluster=values$V1), FUN=sd)
@@ -82,7 +83,7 @@ p<- ggplot(lvalues, aes(x=V1, y=V2)) +
 p+ labs(x = "Cluster",y="Length",col = "Cluster")+ scale_color_manual(labels=c("Long","Short","Medium"),values=c("pink","green","blue"))
 ```
 Figure-3  
-It is observed that the data points belonging to the same length range appear in the same cluster in a length vs Cluster graph, validating the fact that the clustering analysis has been exceuted properly.
+It is observed that the data points belonging to the same length range appear in the same cluster in a length vs Cluster graph, validating the fact that the clustering has been exceuted properly.  
 ```{r}
 counts <- table(lvalues$V1)
 barplot(counts, main="Distribution", 
@@ -100,8 +101,9 @@ colnames(d1)<-c("Cluster","Mean Length","Standard Deviation")
 library(formattable)
 formattable(d1)
 ```  
-Mean length of clusters are shown in the above table.Cluster 0(long) shows maximum standard deviation indicating that the values are spreadout and farther away from the mean. Cluster 1 has minimum standard deviation indicating that values are close to the mean.Both the facts,Mean and Standard deviation, can also be clearly seen in Figure-3.
-####Fuzzy Tempo 
+Mean length of clusters are shown in the above table.Cluster 0(long) shows maximum standard deviation indicating that the values are spreadout and farther away from the mean. Cluster 1 has minimum standard deviation indicating that values are close to the mean.Both the facts,Mean and Standard deviation, can also be clearly seen in Figure-3.  
+
+####Fuzzy Tempo   
 Aim: To cluster songs into slow, medium, and fast
 
 ```{r}
@@ -113,7 +115,7 @@ p<- ggplot(tvalues, aes(x=V1, y=V2)) +
 p+ labs(x = "Cluster",y="Tempo",col = "Cluster")+ scale_color_manual(labels=c("Fast","Slow","Medium"),values=c("pink","green","blue"))
 ```
 Figure-5    
-It is observed that the data points belonging to the same tempo range appear in the same cluster in a tempo vs Cluster graph, validating the fact that the clustering analysis has been exceuted properly.
+It is observed that the data points belonging to the same tempo range appear in the same cluster in a tempo vs Cluster graph, validating the fact that the clustering has been exceuted properly.
 ```{r}
 counts <- table(tvalues$V1)
 barplot(counts, main="Distribution", 
@@ -130,7 +132,8 @@ library(formattable)
 formattable(d1)
 ```  
 Mean tempo of clusters are shown in the above table.Cluster 0(fast) shows maximum standard deviation indicating that the values are spreadout and farther away from the mean. Cluster 2 - medium has minimum standard deviation indicating that values are close to the mean.Both the facts,Mean and Standard deviation, can also be clearly seen in Figure-3.  
-####Fuzzy hotness 
+
+####Fuzzy hotness  
 Aim: To cluster songs into cool, mild, and hot based on song hotness
   
 ```{r}
@@ -142,7 +145,7 @@ p<- ggplot(hvalues, aes(x=V1, y=V2)) +
 p+ labs(x = "Cluster",y="Hotness",col = "Cluster")+ scale_color_manual(labels=c("Hot","Cool","Mild"),values=c("pink","green","blue"))
 ```
 Figure-7  
-It is observed that the data points belonging to the same hotness range appear in the same cluster in a hotness vs Cluster graph, validating the fact that the clustering analysis has been exceuted properly.
+It is observed that the data points belonging to the same hotness range appear in the same cluster in a hotness vs Cluster graph, validating the fact that the clustering has been exceuted properly.
 ```{r}
 counts <- table(hvalues$V1)
 barplot(counts, main="Distribution", 
@@ -198,4 +201,16 @@ p+ labs(x = "Cluster",y="Hotness",col = "Cluster")
 ```
 Figure-11  
 
+####Subproblem-2 : Graphs  
+Observations based on the clustering  
+
+###Performance  
+*K-means-
+ Time of exceution on local:  
+ Time of execution on AWS:  
+*Hierarchical agglomerative clustering-  
+ Time of exceution on local:  
+ Time of execution on AWS:
+
 ###Conclusion  
+
