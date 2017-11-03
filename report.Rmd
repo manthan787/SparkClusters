@@ -18,7 +18,6 @@ library(wordcloud)
 library(formattable)
 ```
 
-  
 ###Objective  
 * Using Spark, implement hierarchical agglomerative clustering and k-means clustering on Million Song Daatset.  
 * Define a commonality graph as an undirected graph. The nodes are artists. There is an edge between artists if they are similar. The weight on the edge is the commonality between the artists, then cluster all artists using k-means in Spark, using the trendsetters as initial centroids and some definition of distance in the commonality graph as distance measure.
@@ -343,7 +342,7 @@ formattable(d1)
 
 - **Time of execution on AWS**  We ran all the KMenas jobs on AWS using the Big Dataset, which took **6 minutes** on a single node.
 
-We think that this performance is reasonable and we were able to verify the results by visualizing them. Compared to Agglomerative clustering, KMeans performs significantly better. We discuss more on Agglomerative Clustering performance in the next section.
+We think that this performance is reasonable and we were able to verify the results by visualizing them. Compared to Agglomerative clustering, KMeans performs significantly faster due to its top-down approach. We discuss more on Agglomerative Clustering performance in the next section.
 
 #### Hierarchical Agglomerative Clustering Results
 
@@ -361,8 +360,26 @@ Here's a few reasons due to which the runtime is too slow for Agglomerative Clus
 
 - Moreover, this method merges only two clusters in to one in each iteration, so the convergence times can be very slow compared to KMeans algorithm.
 
-#### Subproblem 2 : Graphs
+## Subproblem 2 : Graphs
 
+In this task, we cluster artists using common terms shared between them. For this, we use KMeans clustering.
+
+### Approach
+
+- **Initial Centroids**
+    - As Initial Centroids, we take the artist terms of top 30 most popular artists (Trendsetters)
+
+- **Cluster Datapoints**
+    - We assign clusters to each artist in the dataset by calculating common terms between each artist and each centroid. The cluster is assigned based on the maximum number of common terms.
+    
+- **Recalculate Centroids**
+  - Centroids are recalculated by finding the common artist terms within the cluster
+
+- We run KMeans for 10 iterations
+
+The initial centroids and centroids after 10 iterations are visualized below by plotting a word cloud. Note that the numbers in the image shows the ID for the cluster and the surrounding values depict the terms inside that centroid.
+
+Below is the visualization for centroids initially, which represents the artist terms for the top 30 popular artists. For the lack of space, we only represent 15 of these centroids. In the beginning, the centroids seem to be containing a lot of terms.
 
 ```{r cache=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
 init_centroids = read.csv("output/initcentroids1/part-00000", header = FALSE)
@@ -374,7 +391,11 @@ i <- tm_map(i, stripWhitespace)
 i_tdm <- TermDocumentMatrix(i)
 i_tdm <- as.matrix(i_tdm)
 comparison.cloud(i_tdm, title.size = 1, colors=1:30, c(1, 1), random.order = FALSE, max.words = 1000)
+```
 
+Below is the visualization for centroids after 10 iterations. After running Kmeans clustering for 10 iterations, we can see that the centroids have become more specific than the initial centroids and they only represent specific terms. Again, for the lack of space, we only plot 15 centroids out of 30.
+
+```{r cache=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
 i <- Corpus(VectorSource(end_centroids[11:25,]$words))
 i <- tm_map(i, stripWhitespace)
 i_tdm <- TermDocumentMatrix(i)
@@ -382,6 +403,6 @@ i_tdm <- as.matrix(i_tdm)
 comparison.cloud(i_tdm, title.size = 1, colors=1:30, c(1, 1), random.order = FALSE, max.words = 1000)
 ```
 
+###Conclusion
 
-###Conclusion  
-
+Spark makes it easier to write iterative jobs that maintain state across iterations. By examining the findings from running clustering using KMeans Algorithm and Agglomerative Clustering, we can conclude that when the number of clusters is known beforehand, KMeans is a better clustering approach. Since, it runs significantly faster than Agglomerative Clustering.
