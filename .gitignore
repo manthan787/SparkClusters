@@ -8,3 +8,5 @@ input/all
 .Rhistory
 .DS_Store
 .RData
+report_cache
+report_files
