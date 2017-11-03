@@ -4,11 +4,11 @@
 
 **Requirements**
 
-Install Java 1.8
+Install `Java 1.8`
 
-Download binaries for Scala 2.11.8
+Download binaries for `Scala 2.11.8`
 
-Download Spark 2.2.0
+Download `Spark 2.2.0`
 
 **R Requirements**
 
@@ -17,6 +17,7 @@ Install following dependencies to avoid errors while generating the Rmarkdown Re
 From your R console execute following commands:
 
 ```
+install.packages("ggplot2")
 install.packages("tm")
 install.packages("wordcloud")
 install.packages("formattable")
@@ -33,6 +34,10 @@ To build the project:
 To run all the variants:  
 
     make run
+
+If you'd like to change the input path or output path, run it like so:
+
+    make run INPUT_PATH=input/all/ OUTPUT_PATH=out/
 
 To generate the report:
 
