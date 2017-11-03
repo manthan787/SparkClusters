@@ -70,7 +70,6 @@ p<- ggplot(values, aes(x=V1, y=V2)) +
 p+ labs(x = "Cluster",y="Length",col = "Cluster")
 ```
 
-
 ```{r}
 OUTPUT_PATH = "output/kmeans-hotness-random/part-00000"
 values = read.csv(OUTPUT_PATH, header = FALSE)
@@ -80,4 +79,13 @@ values$V1 = as.factor(values$V1)
 p<- ggplot(values, aes(x=V1, y=V2)) + 
   geom_jitter(aes(col = values$V1))
 p+ labs(x = "Cluster",y="Length",col = "Cluster")
+```
+
+```{r}
+OUTPUT_PATH = "output/combined-hotness/part-00000"
+values = read.csv(OUTPUT_PATH, header = FALSE)
+values$V1 = as.factor(values$V1)
+p<- ggplot(values, aes(x=V2, y=V3)) + 
+  geom_jitter(aes(col = values$V1))
+p+ labs(x = "Song Hotness",y="Artist Hotness",col = "Cluster")
 ```
