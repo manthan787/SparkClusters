@@ -2,30 +2,53 @@
 title: "A7 - Clustering"
 author: "Ayushi,Manthan Thakar"
 date: "11/1/2017"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
 ```{r}
 library(ggplot2)
 ```
 
-## Clustering  
+  
+###Objective  
+* Using Spark, implement hierarchical agglomerative clustering and k-means clustering on Million Song Daatset.  
+* Define a commonality graph as an undirected graph. The nodes are artists. There is an edge between artists if they are similar. The weight on the edge is the commonality between the artists, then cluster all artists using k-means in Spark, using the trendsetters as initial centroids and some definition of distance in the commonality graph as distance measure.
 
-###Obsevations 
+###System Specification  
+
+OS: Mac OS Sierra 10.12.6
+
+Java Version: 1.8
+
+RAM: 8Gb
+
+Disk: 256 Gb Solid State Drive
+
+Processor: 2.3GHz Intel i5 Kaby Lake Processor
+
+Scala Version : 2.11.8
+
+Spark Version : 2.2.0
+
+###Results and Obsevations 
+Results obtained after clustering of the given dataset.  
+
+####Fuzzy loudness  
+Aim: To cluster songs into quiet, medium, and loud
 
 ```{r}
 OUTPUT_PATH = "output/kmeans-loudness/part-00000"
 values = read.csv(OUTPUT_PATH, header = FALSE)
-cluster_min = values[values$V1 == 1, ]
-cluster_max = values[values$V1 == 0, ]
 values$V1 = as.factor(values$V1)
 p<- ggplot(values, aes(x=V1, y=V2)) + 
   geom_jitter(aes(col = values$V1))
-p+ labs(x = "Cluster",y="Loudness",col = "Cluster")
+p+labs(x = "Cluster",y="Loudness",col = "Cluster")+ scale_color_manual(labels=c("Loud","Quiet","Medium"),values=c("pink","green","blue"))
+
 ```
 Figure -1  
   
@@ -37,7 +60,7 @@ barplot(counts, main="Distribution",
 ```
 Figure-2   
 
-It is observed that maximum number of points are in cluster 0 indicating that most songs are -{quiet,medum,loud} followed by cluster 2{quiet,medium,loud}  
+It is observed that maximum number of points are in cluster 0 indicating that most songs are loud followed by cluster 2 - quiet.  
 ```{r}
 d1<-aggregate(values$V2, by=list(Cluster=values$V1), FUN=mean)
 d2<-aggregate(values$V2, by=list(Cluster=values$V1), FUN=sd)
@@ -48,44 +71,131 @@ formattable(d1)
 ```  
 Mean loudness of clusters are shown in the above table.Cluster 1 shows maximum standard deviation indicating that the values are spreadout and farther away from the mean. Cluster 0 has minimum standard deviation indicating that values are close to the mean.Both the facts,Mean and Standard deviation, can also be clearly seen in Figure-1.
 
+####Fuzzy length  
+Aim: To cluster songs into short, medium, and long  
 ```{r}
 OUTPUT_PATH = "output/kmeans-length/part-00000"
-values = read.csv(OUTPUT_PATH, header = FALSE)
-cluster_min = values[values$V1 == 1, ]
-cluster_max = values[values$V1 == 0, ]
-values$V1 = as.factor(values$V1)
-p<- ggplot(values, aes(x=V1, y=V2)) + 
-  geom_jitter(aes(col = values$V1))
-p+ labs(x = "Cluster",y="Length",col = "Cluster")
+lvalues = read.csv(OUTPUT_PATH, header = FALSE)
+lvalues$V1 = as.factor(lvalues$V1)
+p<- ggplot(lvalues, aes(x=V1, y=V2)) + 
+  geom_jitter(aes(col = lvalues$V1))
+p+ labs(x = "Cluster",y="Length",col = "Cluster")+ scale_color_manual(labels=c("Long","Short","Medium"),values=c("pink","green","blue"))
 ```
+Figure-3  
+It is observed that the data points belonging to the same length range appear in the same cluster in a length vs Cluster graph, validating the fact that the clustering analysis has been exceuted properly.
+```{r}
+counts <- table(lvalues$V1)
+barplot(counts, main="Distribution", 
+  	xlab="Cluster", ylab="No. of data points")
+```
+Figure-4  
+It is observed that maximum number of points are in cluster 1 indicating that most songs are short followed by cluster 2 - medium.  
+
 
 ```{r}
-OUTPUT_PATH = "output/kmeans-hotness/part-00000"
-values = read.csv(OUTPUT_PATH, header = FALSE)
-cluster_min = values[values$V1 == 1, ]
-cluster_max = values[values$V1 == 0, ]
-values$V1 = as.factor(values$V1)
-p<- ggplot(values, aes(x=V1, y=V2)) + 
-  geom_jitter(aes(col = values$V1))
-p+ labs(x = "Cluster",y="Length",col = "Cluster")
+d1<-aggregate(lvalues$V2, by=list(Cluster=lvalues$V1), FUN=mean)
+d2<-aggregate(lvalues$V2, by=list(Cluster=lvalues$V1), FUN=sd)
+d1$sd<-d2$x
+colnames(d1)<-c("Cluster","Mean Length","Standard Deviation")
+library(formattable)
+formattable(d1)
+```  
+Mean length of clusters are shown in the above table.Cluster 0(long) shows maximum standard deviation indicating that the values are spreadout and farther away from the mean. Cluster 1 has minimum standard deviation indicating that values are close to the mean.Both the facts,Mean and Standard deviation, can also be clearly seen in Figure-3.
+####Fuzzy Tempo 
+Aim: To cluster songs into slow, medium, and fast
+
+```{r}
+OUTPUT_PATH = "output/kmeans-tempo/part-00000"
+tvalues = read.csv(OUTPUT_PATH, header = FALSE)
+tvalues$V1 = as.factor(tvalues$V1)
+p<- ggplot(tvalues, aes(x=V1, y=V2)) + 
+  geom_jitter(aes(col = tvalues$V1))
+p+ labs(x = "Cluster",y="Tempo",col = "Cluster")+ scale_color_manual(labels=c("Fast","Slow","Medium"),values=c("pink","green","blue"))
 ```
+Figure-5    
+It is observed that the data points belonging to the same tempo range appear in the same cluster in a tempo vs Cluster graph, validating the fact that the clustering analysis has been exceuted properly.
+```{r}
+counts <- table(tvalues$V1)
+barplot(counts, main="Distribution", 
+  	xlab="Cluster", ylab="No. of data points")
+```
+Figure-6    
+It is observed that maximum number of points are in cluster 2 indicating that most songs are medium tempo followed by cluster 1 - slow.  
+```{r}
+d1<-aggregate(tvalues$V2, by=list(Cluster=tvalues$V1), FUN=mean)
+d2<-aggregate(tvalues$V2, by=list(Cluster=tvalues$V1), FUN=sd)
+d1$sd<-d2$x
+colnames(d1)<-c("Cluster","Mean Tempo","Standard Deviation")
+library(formattable)
+formattable(d1)
+```  
+Mean tempo of clusters are shown in the above table.Cluster 0(fast) shows maximum standard deviation indicating that the values are spreadout and farther away from the mean. Cluster 2 - medium has minimum standard deviation indicating that values are close to the mean.Both the facts,Mean and Standard deviation, can also be clearly seen in Figure-3.  
+####Fuzzy hotness 
+Aim: To cluster songs into cool, mild, and hot based on song hotness
+  
+```{r}
+OUTPUT_PATH = "output/kmeans-hotness/part-00000"
+hvalues = read.csv(OUTPUT_PATH, header = FALSE)
+hvalues$V1 = as.factor(hvalues$V1)
+p<- ggplot(hvalues, aes(x=V1, y=V2)) + 
+  geom_jitter(aes(col = hvalues$V1))
+p+ labs(x = "Cluster",y="Hotness",col = "Cluster")+ scale_color_manual(labels=c("Hot","Cool","Mild"),values=c("pink","green","blue"))
+```
+Figure-7  
+It is observed that the data points belonging to the same hotness range appear in the same cluster in a hotness vs Cluster graph, validating the fact that the clustering analysis has been exceuted properly.
+```{r}
+counts <- table(hvalues$V1)
+barplot(counts, main="Distribution", 
+  	xlab="Cluster", ylab="No. of data points")
+```
+Figure-8  
+It is observed that maximum number of points are in cluster 1 indicating that most songs are cool followed by cluster 2 - mild.  
+```{r}
+d1<-aggregate(hvalues$V2, by=list(Cluster=hvalues$V1), FUN=mean)
+d2<-aggregate(hvalues$V2, by=list(Cluster=hvalues$V1), FUN=sd)
+d1$sd<-d2$x
+colnames(d1)<-c("Cluster","Mean Hotness","Standard Deviation")
+library(formattable)
+formattable(d1)
+```  
+Mean hotness of clusters are shown in the above table.Cluster 0(hot) shows maximum standard deviation indicating that the values are spreadout and farther away from the mean. Cluster 1 - cool has minimum standard deviation indicating that values are close to the mean.Both the facts,Mean and Standard deviation, can also be clearly seen in Figure-7.  
+
+####Fuzzy combined hotness  
+Aim: To cluster songs into cool, mild, and hot based on two dimensions: artist hotness, and song hotness  
+```{r}
+OUTPUT_PATH = "output/combined-hotness/part-00000"
+cvalues = read.csv(OUTPUT_PATH, header = FALSE)
+cvalues$V1 = as.factor(cvalues$V1)
+p<- ggplot(cvalues, aes(x=V2, y=V3)) + 
+  geom_jitter(aes(col = cvalues$V1))
+p+ labs(x = "Song Hotness",y="Artist Hotness",col = "Cluster")
+```
+Figure-9  
+```{r}
+counts <- table(hvalues$V1)
+barplot(counts, main="Distribution", 
+  	xlab="Cluster", ylab="No. of data points")
+```
+Figure-10  
+```{r}
+d1<-aggregate(cvalues$V2, by=list(Cluster=cvalues$V1), FUN=mean)
+d2<-aggregate(cvalues$V2, by=list(Cluster=cvalues$V1), FUN=sd)
+d1$sd<-d2$x
+colnames(d1)<-c("Cluster","Mean Combined Hotness","Standard Deviation")
+library(formattable)
+formattable(d1)
+```  
+
+####Random Hotness  
 
 ```{r}
 OUTPUT_PATH = "output/kmeans-hotness-random/part-00000"
 values = read.csv(OUTPUT_PATH, header = FALSE)
-cluster_min = values[values$V1 == 1, ]
-cluster_max = values[values$V1 == 0, ]
 values$V1 = as.factor(values$V1)
 p<- ggplot(values, aes(x=V1, y=V2)) + 
   geom_jitter(aes(col = values$V1))
-p+ labs(x = "Cluster",y="Length",col = "Cluster")
+p+ labs(x = "Cluster",y="Hotness",col = "Cluster")
 ```
+Figure-11  
 
-```{r}
-OUTPUT_PATH = "output/combined-hotness/part-00000"
-values = read.csv(OUTPUT_PATH, header = FALSE)
-values$V1 = as.factor(values$V1)
-p<- ggplot(values, aes(x=V2, y=V3)) + 
-  geom_jitter(aes(col = values$V1))
-p+ labs(x = "Song Hotness",y="Artist Hotness",col = "Cluster")
-```
+###Conclusion  
