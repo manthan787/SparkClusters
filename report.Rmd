@@ -205,7 +205,7 @@ Figure-11
 Observations based on the clustering  
 
 ###Performance  
-*K-means-
+*K-means-  
  Time of exceution on local:  
  Time of execution on AWS:  
 *Hierarchical agglomerative clustering-  
