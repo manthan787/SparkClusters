@@ -10,14 +10,15 @@ import utils.Utils
   */
 object Graph {
 
-  val SongInfoPath: String = "input/MillionSongSubset/song_info.csv.gz"
-  val ArtistSimilarityPath: String = "input/MillionSongSubset/similar_artists.csv.gz"
-  val ArtistTermPath: String = "input/MillionSongSubset/artist_terms.csv.gz"
-
   def main(args: Array[String]): Unit = {
     val sparkConf = new SparkConf().setAppName("Graph").setMaster("local")
     val sc = new SparkContext(sparkConf)
     sc.setLogLevel("ERROR")
+
+    val SongInfoPath: String = args(0) + "song_info.csv.gz"
+    val ArtistSimilarityPath: String = args(0) + "similar_artists.csv.gz"
+    val ArtistTermPath: String = args(0) + "artist_terms.csv.gz"
+
     val songData : RDD[SongRecord] = Utils.processCSV(sc.textFile(SongInfoPath))
       .map( x => new SongRecord(x.split(";"))).cache
 
@@ -50,7 +51,7 @@ object Graph {
         (acc1: List[String], acc2: List[String]) => acc1 ::: acc2
       )
     var centroids = trendSetters.join(artistTerms).map(x => x._2._2).zipWithIndex.map(_.swap)
-    centroids.map(x => x._1 + "," + x._2.distinct.mkString("\t")).saveAsTextFile("output/initcentroids1")
+    centroids.map(x => x._1 + "," + x._2.distinct.mkString("\t")).saveAsTextFile(args(1) + "initcentroids1")
     var i = 0
     var clusters: RDD[(Long, List[String])] = null
     while ( i < 10) {
@@ -59,7 +60,7 @@ object Graph {
       centroids = getCentroids(clusters, centroids)
       i += 1
     }
-    centroids.map(x => x._1 + "," + x._2.distinct.mkString("\t")).saveAsTextFile("output/endcentroids1")
+    centroids.map(x => x._1 + "," + x._2.distinct.mkString("\t")).saveAsTextFile(args(1) + "endcentroids1")
   }
 
   def getClusters(centroids: RDD[(Long, List[String])], artistTerms: RDD[(String, List[String])]): RDD[(Long, List[String])] = {
