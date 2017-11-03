@@ -25,7 +25,7 @@ install.packages("formattable")
 
 ### Makefile
 
-Before you build the project, make sure you've pointed `SCALA_HOME` to your Scala 2.11.8 binaries home directory and `SPARK_HOME` to Spark 2.2.0 home directory.
+Before you build the project, make sure you've pointed `SCALA_HOME` to your **Scala 2.11.8** binaries home directory and `SPARK_HOME` to **Spark 2.2.0** home directory.
 
 To build the project:  
 
