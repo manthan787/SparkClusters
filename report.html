@@ -152,9 +152,6 @@ $(document).ready(function () {
 <p>vCPU: 4</p>
 </div>
 </div>
-<div id="results-and-obsevations" class="section level2">
-<h2>Results and Obsevations</h2>
-</div>
 <div id="subproblem-1-clustering" class="section level2">
 <h2>Subproblem 1 : Clustering</h2>
 <p>In this section, we present the findings obtained by implementing &amp; running KMeans clustering and Hierarchical Agglomerative Clustering on Million Song Dataset, to obtain Fuzzy Loudness, Fuzzy Length, Fuzzy Tempo, Fuzzy Hotness and Combined Hotness.</p>
@@ -199,7 +196,7 @@ $(document).ready(function () {
 <div id="fuzzy-loudness" class="section level4">
 <h4>Fuzzy loudness</h4>
 <ul>
-<li>**<a href="Aim:**" class="uri">Aim:**</a> To cluster songs into quiet, medium, and loud</li>
+<li>Aim: To cluster songs into quiet, medium, and loud</li>
 </ul>
 <p>For this task, we cluster the loudness using KMeans clustering algorithm. As described above, we take <code>Min</code>, <code>Max</code> and <code>Mean</code> values of Loudness as initial centroids. The results generated are visualized for both small and big dataset.</p>
 <p>In the following graphs, the points are colored based on what cluster they belong to. Loudness is on Y-axis and since this is one dimensional data we keep the cluster ID as X-axis.</p>
@@ -263,7 +260,7 @@ Standard Deviation
 <div id="fuzzy-length" class="section level4">
 <h4>Fuzzy length</h4>
 <ul>
-<li>**<a href="Aim:**" class="uri">Aim:**</a> To cluster songs into short, medium, and long</li>
+<li>Aim: To cluster songs into short, medium, and long</li>
 </ul>
 <p>For this task, we cluster the length of songs using KMeans clustering algorithm. As described above, we take <code>Min</code>, <code>Max</code> and <code>Mean</code> values of length as initial centroids. The results generated are visualized for both small and big dataset.</p>
 <p>As can be seen in <code>Figure 3.1</code> and <code>Figure 3.2</code>, the <code>short</code> and <code>medium</code> clusters are very dense, where as, the <code>long</code> cluster is more scattered. This shows that there are very few long songs in the dataset. Most of the songs seem to be either medium or short.</p>
@@ -334,7 +331,7 @@ Standard Deviation
 <div id="fuzzy-tempo" class="section level4">
 <h4>Fuzzy Tempo</h4>
 <ul>
-<li>**<a href="Aim:**" class="uri">Aim:**</a> To cluster songs into slow, medium, and fast</li>
+<li>Aim: To cluster songs into slow, medium, and fast</li>
 </ul>
 <p>For this task, we cluster the tempo of songs using KMeans clustering algorithm. As described above, we take <code>Min</code>, <code>Max</code> and <code>Mean</code> values of length as initial centroids. The results generated are visualized for both small and big dataset.</p>
 <p>In both <code>Figure 5.1</code> and <code>Figure 5.2</code>, the clusters for fast songs and slow songs seem to be having a range where the cluster is very dense. For example, the values between tempo 150 to 200 have a lot of values clustered for <code>Fast</code> cluster . But above 200, the values are scattered. This indicates that there are very few songs that are either fast or slow.</p>
@@ -420,7 +417,7 @@ Standard Deviation
 <div id="fuzzy-hotness" class="section level4">
 <h4>Fuzzy hotness</h4>
 <ul>
-<li>**<a href="Aim:**" class="uri">Aim:**</a> To cluster songs into cool, mild, and hot based on song hotness</li>
+<li>Aim: To cluster songs into cool, mild, and hot based on song hotness</li>
 </ul>
 <p>For this task, we cluster songs by their hotness using KMeans clustering algorithm. As described above, we take <code>Min</code>, <code>Max</code> and <code>Mean</code> values of length as initial centroids. The results generated are visualized for both small and big dataset.</p>
 <p>Ignoring the 0 values clustered in <code>Cool</code>, which are noise value introduced while converting <code>NA</code> values to 0, we see that the remaining points perfectly split in two clusters. This could happen due to the way we run KMeans clustering or it could be because of the characteristics of the data.</p>
@@ -507,7 +504,7 @@ Standard Deviation
 <div id="fuzzy-combined-hotness" class="section level4">
 <h4>Fuzzy combined hotness</h4>
 <ul>
-<li><strong>Aim</strong>: To cluster songs into cool, mild, and hot based on two dimensions: artist hotness, and song hotness</li>
+<li>Aim: To cluster songs into cool, mild, and hot based on two dimensions: artist hotness, and song hotness</li>
 </ul>
 <p>For this task, we cluster songs by their hotness and their artists’ hotness using KMeans clustering algorithm. All the previous taks only performed KMeans algorithm on a one dimensional data. In this task, two dimensions are used. Instead of calculating <code>Min</code>, <code>Max</code> and <code>Mean</code> values to initialize the centroids, we randomly take sample data from the dataset and initialize the centroids.</p>
 <p><code>Figure 9.1</code> and <code>Figure 9.2</code> show the clusters in Small Dataset and Big Dataset respectively.</p>

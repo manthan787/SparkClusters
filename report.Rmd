@@ -52,8 +52,6 @@ Storage: 2 x 40 GB SSD
 
 vCPU: 4
 
-## Results and Obsevations  
-
 ## Subproblem 1 : Clustering
 
 In this section, we present the findings obtained by implementing & running KMeans clustering and Hierarchical Agglomerative Clustering on Million Song Dataset, to obtain Fuzzy Loudness, Fuzzy Length, Fuzzy Tempo, Fuzzy Hotness and Combined Hotness.
@@ -95,7 +93,7 @@ In this section we discuss the results obtained by KMeans clustering and Agglome
 
 #### Fuzzy loudness 
 
-- **Aim:** To cluster songs into quiet, medium, and loud
+- Aim: To cluster songs into quiet, medium, and loud
 
 For this task, we cluster the loudness using KMeans clustering algorithm. As described above, we take `Min`, `Max` and `Mean` values of Loudness as initial centroids. The results generated are visualized for both small and big dataset.
 
@@ -146,7 +144,7 @@ Mean loudness of clusters are shown in the above table. Cluster 1 shows maximum 
 
 #### Fuzzy length  
 
-- **Aim:** To cluster songs into short, medium, and long
+- Aim: To cluster songs into short, medium, and long
 
 For this task, we cluster the length of songs using KMeans clustering algorithm. As described above, we take `Min`, `Max` and `Mean` values of length as initial centroids. The results generated are visualized for both small and big dataset.
 
@@ -195,7 +193,7 @@ Mean length of clusters are shown in the above table. Cluster 0(long) shows maxi
 
 #### Fuzzy Tempo
 
-- **Aim:** To cluster songs into slow, medium, and fast
+- Aim: To cluster songs into slow, medium, and fast
 
 For this task, we cluster the tempo of songs using KMeans clustering algorithm. As described above, we take `Min`, `Max` and `Mean` values of length as initial centroids. The results generated are visualized for both small and big dataset.
 
@@ -244,7 +242,7 @@ Mean tempo of clusters is shown in the above table. Cluster 0(fast) shows maximu
 
 #### Fuzzy hotness  
 
-- **Aim:** To cluster songs into cool, mild, and hot based on song hotness
+- Aim: To cluster songs into cool, mild, and hot based on song hotness
 
 For this task, we cluster songs by their hotness using KMeans clustering algorithm. As described above, we take `Min`, `Max` and `Mean` values of length as initial centroids. The results generated are visualized for both small and big dataset.
 
@@ -296,7 +294,7 @@ Mean hotness of clusters are shown in the above table.Cluster 0(hot) shows maxim
 
 #### Fuzzy combined hotness
 
-- **Aim**:  To cluster songs into cool, mild, and hot based on two dimensions: artist hotness, and song hotness
+- Aim:  To cluster songs into cool, mild, and hot based on two dimensions: artist hotness, and song hotness
 
 For this task, we cluster songs by their hotness and their artists' hotness using KMeans clustering algorithm. All the previous taks only performed KMeans algorithm on a one dimensional data. In this task, two dimensions are used. Instead of calculating `Min`, `Max` and `Mean` values to initialize the centroids, we randomly take sample data from the dataset and initialize the centroids.
 
