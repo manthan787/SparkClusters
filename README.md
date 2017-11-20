@@ -1,6 +1,12 @@
-# A7: Clustering
+# SparkClusters
+
+This repository contains custom implementation of K-Means clustering and Hierarchical Agglomerative Clustering on **Apache Spark**, written in **Scala.**
+
+The clustering algorithms are run on [Million Song Dataset](https://labrosa.ee.columbia.edu/millionsong/) and the results with visualization and analysis can be found in `report.pdf`.
 
 ### Running The Project
+
+You can run the pipeline to run the clustering algorithms on Million Song Dataset and building the report (with visualizations) by following the instructions below.
 
 **Requirements**
 
