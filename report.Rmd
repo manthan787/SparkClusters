@@ -2,9 +2,7 @@
 title: "A7 - Clustering"
 author: "Ayushi,Manthan Thakar"
 date: "11/1/2017"
-output:
-  html_document: default
-  pdf_document: default
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE, message=FALSE}
